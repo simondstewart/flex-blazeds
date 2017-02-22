@@ -90,7 +90,7 @@ public class AmfDeserializerTest extends TestCase
             }
 
             URL resource = ClassLoader.getSystemResource(sample);
-            File testData = new File(resource.getFile());
+            File testData = new File(resource.toURI());
             String testDataLocation = testData.getCanonicalPath();
 
             PipedOutputStream pout = new PipedOutputStream();

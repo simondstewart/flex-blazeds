@@ -92,7 +92,7 @@ public class AmfDeserializationValidatorTest extends TestCase
                 sample = "amf_request.xml";
 
             URL resource = ClassLoader.getSystemResource(sample);
-            File testData = new File(resource.getFile());
+            File testData = new File(resource.toURI());
             String testDataLocation = testData.getCanonicalPath();
 
             // Generate sample AMF request from the data file.
