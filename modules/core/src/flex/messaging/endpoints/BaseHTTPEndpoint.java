@@ -456,39 +456,44 @@ public abstract class BaseHTTPEndpoint extends AbstractEndpoint
             }
         }
 
-        // If more than one was found, remote host isn't using session cookies. Kill all duplicate sessions and return an error.
-        // Simplest to just re-scan the list given that it will be very short, but use an iterator for concurrent modification.
-        if (duplicateSessionDetected)
-        {
-            Object attributeValue = FlexContext.getHttpRequest().getAttribute(REQUEST_ATTR_DUPLICATE_SESSION_FLAG);
-            String newSessionId = null;
-            String oldSessionId = null;
-            if (attributeValue != null)
-            {
-                @SuppressWarnings("unchecked")
-                List<HttpFlexSession> httpFlexSessions = (List<HttpFlexSession>)attributeValue;
-                oldSessionId = httpFlexSessions.get(0).getId();
-                newSessionId = httpFlexSessions.get(1).getId();
-            }
-
-            if (sessions != null)
-            {
-                for (FlexSession session : sessions)
-                {
-                    if (session instanceof HttpFlexSession)
-                    {
-                        session.invalidate();
-                    }
-                }
-            }
-
-            // Return an error to the client.
-
-            DuplicateSessionException e = new DuplicateSessionException();
-            // Duplicate HTTP-based FlexSession error: A request for FlexClient ''{0}'' arrived over a new FlexSession ''{1}'', but FlexClient is already associated with FlexSession ''{2}'', therefore it cannot be associated with the new session.
-            e.setMessage(ERR_MSG_DUPLICATE_SESSIONS_DETECTED, new Object[]{flexClient.getId(), newSessionId, oldSessionId});
-            throw e;
-        }
+        /**
+         * Crowbar fix to Remove Duplicate Session Checking, as there appears to be issues deserialising the session from our Spring Session
+         * Redis implementation.  Two sessions of the same Id end up in the sessions collection, which fires this duplication 
+         * protection logic and invalidates the session. 
+         */
+//        // If more than one was found, remote host isn't using session cookies. Kill all duplicate sessions and return an error.
+//        // Simplest to just re-scan the list given that it will be very short, but use an iterator for concurrent modification.
+//        if (duplicateSessionDetected)
+//        {
+//            Object attributeValue = FlexContext.getHttpRequest().getAttribute(REQUEST_ATTR_DUPLICATE_SESSION_FLAG);
+//            String newSessionId = null;
+//            String oldSessionId = null;
+//            if (attributeValue != null)
+//            {
+//                @SuppressWarnings("unchecked")
+//                List<HttpFlexSession> httpFlexSessions = (List<HttpFlexSession>)attributeValue;
+//                oldSessionId = httpFlexSessions.get(0).getId();
+//                newSessionId = httpFlexSessions.get(1).getId();
+//            }
+//
+//            if (sessions != null)
+//            {
+//                for (FlexSession session : sessions)
+//                {
+//                    if (session instanceof HttpFlexSession)
+//                    {
+//                        session.invalidate();
+//                    }
+//                }
+//            }
+//
+//            // Return an error to the client.
+//
+//            DuplicateSessionException e = new DuplicateSessionException();
+//            // Duplicate HTTP-based FlexSession error: A request for FlexClient ''{0}'' arrived over a new FlexSession ''{1}'', but FlexClient is already associated with FlexSession ''{2}'', therefore it cannot be associated with the new session.
+//            e.setMessage(ERR_MSG_DUPLICATE_SESSIONS_DETECTED, new Object[]{flexClient.getId(), newSessionId, oldSessionId});
+//            throw e;
+//        }
 
         return flexClient;
     }
