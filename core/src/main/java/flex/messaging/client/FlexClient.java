@@ -1194,6 +1194,14 @@ public class FlexClient extends TimeoutAbstractObject implements FlexSessionList
         }
     }
 
+    public void registerFlexContextSession() {
+        FlexSession flexContextSession = FlexContext.getFlexSession();
+        if(flexContextSession != null) {
+            this.sessions.clear();
+            registerFlexSession(flexContextSession);
+        }
+    }
+
     /**
      *
      * Used internally to associate a MessageClient with this FlexClient.

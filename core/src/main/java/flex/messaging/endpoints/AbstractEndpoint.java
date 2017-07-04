@@ -1102,8 +1102,10 @@ public abstract class AbstractEndpoint extends ManageableComponent
 
            flexClient = getMessageBroker().getFlexClientManager().getFlexClient(id);
            // Make sure the FlexClient and FlexSession are associated.
-           FlexSession session = FlexContext.getFlexSession();
-           flexClient.registerFlexSession(session);
+
+           // FlexContext session is backed by redis, to not encounter the duplicate session issue
+           // that's the only session we are going to use on the flexClient.
+           flexClient.registerFlexContextSession();
            // And place the FlexClient in FlexContext for this request.
            FlexContext.setThreadLocalFlexClient(flexClient);
        }
