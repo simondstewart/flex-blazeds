@@ -39,36 +39,7 @@ public class ClassDeserializationValidator implements DeserializationValidator {
     public static final String PROPERTY_CLASS_ATTR = "class";
     public static final String PROPERTY_NAME_ATTR = "name";
 
-    private static final String[] DEFAULT_ALLOW_CLASSES = {
-            "flex.messaging.io.amf.SerializedObject",
-            "flex.messaging.io.ArrayCollection",
-            "flex.messaging.io.ObjectProxy",
-            "flex.messaging.io.SerializationProxy",
-            "flex.messaging.messages.AcknowledgeMessageExt",
-            "flex.messaging.messages.AsyncMessageExt",
-            "flex.messaging.messages.CommandMessageExt",
-            "flex.data.messages.DataMessageExt",
-            "flex.data.messages.ManagedRemotingMessageExt",
-            "flex.data.messages.PagedMessageExt",
-            "flex.data.messages.SequencedMessageExt",
-            "flex.data.messages.UpdateCollectionMessageExt",
-            "flex.data.ChangedItems",
-            "java.lang.Boolean",
-            "java.lang.Byte",
-            "java.lang.Character",
-            "java.lang.Double",
-            "java.lang.Float",
-            "java.lang.Integer",
-            "java.lang.Long",
-            "java.lang.Object",
-            "java.lang.Short",
-            "java.lang.String",
-            "java.io.Externalizable",
-            "java.util.Date",
-            "org.w3c.dom.Document",
-            "\\[B",
-            "\\[Ljava.lang.Object;"
-    };
+    private static final String[] DEFAULT_ALLOW_CLASSES = new String[]{"flex.messaging.io.amf.ASObject", "flex.messaging.io.amf.SerializedObject", "flex.messaging.io.ArrayCollection", "flex.messaging.io.ArrayList", "flex.messaging.messages.AcknowledgeMessage", "flex.messaging.messages.AcknowledgeMessageExt", "flex.messaging.messages.AsyncMessage", "flex.messaging.messages.AsyncMessageExt", "flex.messaging.messages.CommandMessage", "flex.messaging.messages.CommandMessageExt", "flex.messaging.messages.ErrorMessage", "flex.messaging.messages.HTTPMessage", "flex.messaging.messages.RemotingMessage", "flex.messaging.messages.SOAPMessage", "java.lang.Boolean", "java.lang.Byte", "java.lang.Character", "java.lang.Double", "java.lang.Float", "java.lang.Integer", "java.lang.Long", "java.lang.Object", "java.lang.Short", "java.lang.String", "java.util.ArrayList", "java.util.Date", "java.util.HashMap", "org.w3c.dom.Document", "\\[B", "\\[Ljava.lang.Object;"};
 
     //--------------------------------------------------------------------------
     //
